@@ -106,9 +106,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseRateLimiting();
-
+// CORS must come before rate limiting so CORS headers are always added
 app.UseCors(AllowSpecificOrigins);
+
+app.UseRateLimiting();
 
 app.UseAuthorization();
 app.UseMiddleware<SecurityHeadersMiddleware>();

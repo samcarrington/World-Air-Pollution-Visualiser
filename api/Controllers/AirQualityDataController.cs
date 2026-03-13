@@ -115,25 +115,28 @@ public partial class AirQualityDataController : ControllerBase
         }
 
         // Fetch data for each UID, handling individual failures gracefully
-        var dictionary = new Dictionary<string, AirQualityDataSetDto?>();
         var tasks = sanitizedUids.Select(async uid =>
         {
             try
             {
                 var data = await _airQualityDataRepository.GetDataByUID(uid);
-                return (uid, data: (AirQualityDataSetDto?)data);
+                return (uid, data, success: true);
             }
             catch
             {
                 // Return null for failed UIDs instead of failing the entire request
-                return (uid, data: (AirQualityDataSetDto?)null);
+                return (uid, data: (AirQualityDataSetDto)null!, success: false);
             }
         });
 
         var results = await Task.WhenAll(tasks);
-        foreach (var (uid, data) in results)
+        var dictionary = new Dictionary<string, AirQualityDataSetDto>();
+        foreach (var (uid, data, success) in results)
         {
-            dictionary[uid] = data;
+            if (success && data != null)
+            {
+                dictionary[uid] = data;
+            }
         }
 
         return Ok(dictionary);

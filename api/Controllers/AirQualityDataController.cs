@@ -114,12 +114,27 @@ public partial class AirQualityDataController : ControllerBase
             return BadRequest($"UID length cannot exceed {maxUidLength} characters");
         }
 
-        var tasks = sanitizedUids.Select(uid => _airQualityDataRepository.GetDataByUID(uid));
-        var results = await Task.WhenAll(tasks);
+        // Fetch data for each UID, handling individual failures gracefully
+        var dictionary = new Dictionary<string, AirQualityDataSetDto?>();
+        var tasks = sanitizedUids.Select(async uid =>
+        {
+            try
+            {
+                var data = await _airQualityDataRepository.GetDataByUID(uid);
+                return (uid, data: (AirQualityDataSetDto?)data);
+            }
+            catch
+            {
+                // Return null for failed UIDs instead of failing the entire request
+                return (uid, data: (AirQualityDataSetDto?)null);
+            }
+        });
 
-        var dictionary = sanitizedUids
-            .Zip(results, (uid, data) => new { uid, data })
-            .ToDictionary(x => x.uid, x => x.data);
+        var results = await Task.WhenAll(tasks);
+        foreach (var (uid, data) in results)
+        {
+            dictionary[uid] = data;
+        }
 
         return Ok(dictionary);
     }

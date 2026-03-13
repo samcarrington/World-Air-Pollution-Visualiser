@@ -24,15 +24,6 @@ namespace api.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            // Skip rate limiting for CORS preflight requests
-            if (context.Request.Method == HttpMethods.Options &&
-                context.Request.Headers.ContainsKey("Origin") &&
-                context.Request.Headers.ContainsKey("Access-Control-Request-Method"))
-            {
-                await _next(context);
-                return;
-            }
-
             // Get client identifier (IP address + User-Agent for better uniqueness)
             var clientId = GetClientIdentifier(context);
 

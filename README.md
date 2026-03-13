@@ -104,7 +104,7 @@
 - **Controller**: 
     - The [controller](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/api/Controllers/AirQualityDataController.cs) defines the endpoints to access AQI data by UID(s) or Latitude/Longitude. 
 
-- **Sanitizion**:
+- **Sanitization**:
     - The controller calls the [sanitization](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/api/Services/InputSanitizationService.cs) service to clean and validate user input to prevent invalid data or injection attacks. 
 
 
@@ -118,17 +118,17 @@
 
     
 
-      - Routing takes places from [App](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/App.tsx)       
+      - Routing takes place from [App](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/App.tsx)       
   
       - This displays the [Home](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/Pages/Home/HomePage.tsx) page, which currently manages a lot of the state for the app.
     
     - **Form Components**:
 
-      - (FindDataForNearestStationForm.tsx)[https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/components/FormComponents/FindDataForNearestStationForm.tsx] displays the context dependant "hide map" and "show map" button and allows the submission of long/lat data by a map click.
+      - (FindDataForNearestStationForm.tsx)[https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/components/FormComponents/FindDataForNearestStationForm.tsx] displays the context dependent "hide map" and "show map" button and allows the submission of long/lat data by a map click.
 
-      - [MapComponent.tsx](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/components/FormComponents/MapComponent.tsx) manages the map visibility, initial coordinates and 
+      - [MapComponent.tsx](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/components/FormComponents/MapComponent.tsx) manages the map visibility, initial coordinates and user interactions on the map, such as panning and zooming.
     
-      -[LocationMapMarker](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/components/FormComponents/LocationMarkerMap.tsx) displays the map marker and updates both it's position and lat/long form fields on mouse click.
+      - [LocationMapMarker](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/components/FormComponents/LocationMarkerMap.tsx) displays the map marker and updates both it's position and lat/long form fields on mouse click.
 
     - **AQIVisualiser**:
         
@@ -142,7 +142,7 @@
 
     - **AQI Figures Displays**:
   
-      - [AQIFiguresDisplay](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/components/AqiFiguresDisplay.css) displays the responsive control panel with the current AQI values for the selected location, the location and local time and controls to activate or deactivate the visualisation for each available pollutant.
+      - [AQIFiguresDisplay](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/components/AqiFiguresDisplay.tsx) displays the responsive control panel with the current AQI values for the selected location, the location and local time and controls to activate or deactivate the visualisation for each available pollutant.
 
       - [TickerTape](https://github.com/simon-duck/World-Air-Quality-Visualiser/blob/main/ui/src/components/TickerTape.tsx) displays a moving ticker-tape display at the bottom of the screen with current AQI values for major world cities. It uses [motion/react](https://motion.dev/docs/react) to create the scroll and updates the live data every ten minutes.
 
